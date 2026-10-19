@@ -1,0 +1,70 @@
+{
+  "name": "Site Visit",
+  "sites": [
+    {
+      "site_id": "dji_20260930141701_0001_d",
+      "display_name": "Stop 1",
+      "lat": 47.11753363888889,
+      "lng": -123.13325708333333,
+      "platform": "aerial",
+      "overview": true,
+      "alt": 119.81,
+      "rel_alt": 122.52
+    },
+    {
+      "site_id": "dji_20260930141034_0001_d",
+      "display_name": "Stop 2",
+      "lat": 47.11881391666667,
+      "lng": -123.12928719444444,
+      "platform": "aerial",
+      "alt": 22.1,
+      "rel_alt": 24.8
+    },
+    {
+      "site_id": "dji_20260930141225_0001_d",
+      "display_name": "Stop 3",
+      "lat": 47.11769508333333,
+      "lng": -123.12877619444444,
+      "platform": "aerial",
+      "alt": 21.43,
+      "rel_alt": 24.14
+    },
+    {
+      "site_id": "dji_20260930141427_0001_d",
+      "display_name": "Stop 4",
+      "lat": 47.11470355555556,
+      "lng": -123.12983874999999,
+      "platform": "aerial",
+      "alt": 21.95,
+      "rel_alt": 24.66
+    },
+    {
+      "site_id": "img_20260930_143311_00_020",
+      "display_name": "Stop 5",
+      "lat": 47.118883060001316,
+      "lng": -123.1292241799993,
+      "alt": -0.0
+    },
+    {
+      "site_id": "img_20260930_143338_00_021",
+      "display_name": "Stop 6",
+      "lat": 47.11931289000652,
+      "lng": -123.12903911000552,
+      "alt": -0.0
+    }
+  ],
+  "basemap_type": "xyz_tile",
+  "basemap_url": "https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}",
+  "overlays": [
+    {
+      "label": "Ortho (2/11/2026)",
+      "url": "https://tiles.arcgis.com/tiles/buuvDFFARQiOEbVZ/arcgis/rest/services/SkookumRanchPond_Ortho_20260211_expanded_bilinearresamplingtest/MapServer/tile/{z}/{y}/{x}",
+      "opacity": 1.0,
+      "default_on": true,
+      "type": "tile"
+    }
+  ],
+  "forward_label": "Forward",
+  "backward_label": "Back",
+  "field_visit_date": "2026-09-30"
+}

@@ -1,0 +1,83 @@
+{
+  "mode": "single",
+  "format": "raw",
+  "yaw_1": 0.0,
+  "pitch_1": 0.0,
+  "yaw_2": 0.0,
+  "pitch_2": 0.0,
+  "lat": 47.11931289000652,
+  "lng": -123.12903911000552,
+  "label_1": "IMG_20260930_143338_00_021 (2026/09/30)",
+  "label_2": "",
+  "autorotate": false,
+  "hotspots_1": [
+    {
+      "yaw": 0.991259731373491,
+      "pitch": 0.10900087671048375,
+      "title": "Stop 5",
+      "text": "",
+      "link": "",
+      "category": "link",
+      "pin_style": "label_hover",
+      "target": "img_20260930_143311_00_020",
+      "link_icon": "ground"
+    },
+    {
+      "yaw": 1.0787673995552403,
+      "pitch": -0.3607931909658155,
+      "title": "Stop 2",
+      "text": "",
+      "link": "",
+      "category": "link",
+      "pin_style": "label_hover",
+      "target": "dji_20260930141034_0001_d",
+      "link_icon": "aerial"
+    },
+    {
+      "yaw": 0.6423863063288292,
+      "pitch": -0.11785654077687156,
+      "title": "Stop 3",
+      "text": "",
+      "link": "",
+      "category": "link",
+      "pin_style": "label_hover",
+      "target": "dji_20260930141225_0001_d",
+      "link_icon": "aerial"
+    },
+    {
+      "yaw": 1.7684353663425698,
+      "pitch": -0.3088525281882437,
+      "title": "Stop 1",
+      "text": "",
+      "link": "",
+      "category": "link",
+      "pin_style": "label_hover",
+      "target": "dji_20260930141701_0001_d",
+      "link_icon": "overview"
+    },
+    {
+      "yaw": 0.870045181258227,
+      "pitch": -0.042505405140403185,
+      "title": "Stop 4",
+      "text": "",
+      "link": "",
+      "category": "link",
+      "pin_style": "label_hover",
+      "target": "dji_20260930141427_0001_d",
+      "link_icon": "aerial"
+    }
+  ],
+  "hotspots_2": [],
+  "levels_1": [],
+  "levels_2": [],
+  "pin_style": "dot",
+  "basemap_type": "xyz_tile",
+  "basemap_url": "https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}",
+  "mobile_1": 5000,
+  "mobile_2": 0,
+  "heading_offset": 136.8832996647842,
+  "overlays": [],
+  "alt_checked": true,
+  "alt": -0.0,
+  "heading_confirmed": true
+}

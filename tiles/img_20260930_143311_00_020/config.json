@@ -1,0 +1,83 @@
+{
+  "mode": "single",
+  "format": "raw",
+  "yaw_1": -1.155314975100529,
+  "pitch_1": 0.2850663208122768,
+  "yaw_2": 0.0,
+  "pitch_2": 0.0,
+  "lat": 47.118883060001316,
+  "lng": -123.1292241799993,
+  "label_1": "IMG_20260930_143311_00_020 (2026/09/30)",
+  "label_2": "",
+  "autorotate": false,
+  "hotspots_1": [
+    {
+      "yaw": 3.977576636555658,
+      "pitch": -1.1822471998427553,
+      "title": "Stop 2",
+      "text": "",
+      "link": "",
+      "category": "link",
+      "pin_style": "label_hover",
+      "target": "dji_20260930141034_0001_d",
+      "link_icon": "aerial"
+    },
+    {
+      "yaw": 0.5658828317785661,
+      "pitch": -0.0,
+      "title": "Stop 6",
+      "text": "",
+      "link": "",
+      "category": "link",
+      "pin_style": "label_hover",
+      "target": "img_20260930_143338_00_021",
+      "link_icon": "ground"
+    },
+    {
+      "yaw": 3.1712693156425855,
+      "pitch": -0.15586351143907753,
+      "title": "Stop 3",
+      "text": "",
+      "link": "",
+      "category": "link",
+      "pin_style": "label_hover",
+      "target": "dji_20260930141225_0001_d",
+      "link_icon": "aerial"
+    },
+    {
+      "yaw": 4.536291919328591,
+      "pitch": -0.33874761036693835,
+      "title": "Stop 1",
+      "text": "",
+      "link": "",
+      "category": "link",
+      "pin_style": "label_hover",
+      "target": "dji_20260930141701_0001_d",
+      "link_icon": "overview"
+    },
+    {
+      "yaw": 3.522199705470288,
+      "pitch": -0.04696149209017275,
+      "title": "Stop 4",
+      "text": "",
+      "link": "",
+      "category": "link",
+      "pin_style": "label_hover",
+      "target": "dji_20260930141427_0001_d",
+      "link_icon": "aerial"
+    }
+  ],
+  "hotspots_2": [],
+  "levels_1": [],
+  "levels_2": [],
+  "pin_style": "dot",
+  "basemap_type": "xyz_tile",
+  "basemap_url": "https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}",
+  "mobile_1": 5000,
+  "mobile_2": 0,
+  "heading_offset": 343.90728096671444,
+  "overlays": [],
+  "alt_checked": true,
+  "alt": -0.0,
+  "heading_confirmed": true
+}
