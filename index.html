@@ -800,7 +800,7 @@
 </head>
 <body>
 
-  <div id="build-timestamp">Built 2026-10-21 10:18:00</div>
+  <div id="build-timestamp">Built 2026-10-21 15:45:39</div>
 
   <div id="status-banner"></div>
 
@@ -957,7 +957,7 @@
 
   <script>
     const urlParams = new URLSearchParams(window.location.search);
-    let rawSiteId = urlParams.get('site') || urlParams.get('well') || 'dji_20260930141701_0001_d';
+    let rawSiteId = urlParams.get('site') || urlParams.get('well') || 'dji_20261021143254_0001_d';
     const siteId = rawSiteId.trim().toLowerCase().replace(/[\s-]+/g, '_');
 
     const tourParam = urlParams.get('tour');
@@ -2653,15 +2653,118 @@
     // individual site's basemap.
     var pendingMapData = null;
 
+    // Zoom limits that follow the tile caches actually loaded. An Esri tile service lists its
+    // cached levels at <service>?f=json (tileInfo.lods). The deepest cached level becomes that
+    // layer's maxNativeZoom (so Leaflet stretches the last real tiles instead of asking for
+    // missing ones), and the map may zoom OVERZOOM_LEVELS past the deepest cache of any layer.
+    // Until the service answers, layers keep the old behaviour (no native cap, zoom up to 22).
+    var OVERZOOM_LEVELS = 0;      // levels of stretch allowed past the deepest cached level (0 = stop at the last cached level)
+    var TILE_ABS_MAX_ZOOM = 21;   // hard navigation boundary: the map never zooms past this level, whatever a service reports
+    var tileNativeMax = 0;
+    var TILE_HARD_CEILING = 24;   // no layer setting can raise the map past this
+    var XYZ_NATIVE_MAX_ZOOM = 20; // deepest real level assumed for plain XYZ basemaps such as Google satellite
+    // Pins a tile layer to its last real level and sets the map's zoom boundary from the deepest layer.
+    var tileTopLayers = [];
+    function applyTileTop(layer, top) {
+      top = Math.min(top, TILE_HARD_CEILING);
+      layer.options.maxNativeZoom = top;
+      layer.options.maxZoom = TILE_HARD_CEILING;
+      layer._lodTop = top;
+      if (tileTopLayers.indexOf(layer) < 0) tileTopLayers.push(layer);
+      tileNativeMax = 0;
+      tileTopLayers.forEach(function (l) { tileNativeMax = Math.max(tileNativeMax, l._lodTop); });
+      if (siteMap) siteMap.setMaxZoom(Math.min(tileNativeMax + OVERZOOM_LEVELS, TILE_HARD_CEILING));
+      if (layer._map) layer.redraw();
+    }
+
+    // Finds the deepest level that really has tiles. A tile service's level list covers the whole tiling
+    // scheme (down to 23) whatever was cached, but the service's tilemap endpoint says which tiles exist.
+    // Checks a 9x9 block of tiles around five spots in the layer's extent, per level, and binary searches
+    // the levels. Resolves to null when the service can't answer (no Tilemap capability, odd projection...).
+    function probeCachedMaxLevel(root, meta) {
+      try {
+        var ti = meta.tileInfo, ext = meta.fullExtent || meta.initialExtent;
+        if (!window.fetch || !ti || !ti.lods || !ti.origin || !ext) return Promise.resolve(null);
+        if (!/tilemap/i.test(String(meta.capabilities || ''))) return Promise.resolve(null);
+        var wkid = ext.spatialReference && (ext.spatialReference.latestWkid || ext.spatialReference.wkid);
+        if ([102100, 102113, 3857, 900913].indexOf(wkid) < 0) return Promise.resolve(null);
+        var size = ti.rows || 256, HALF = 4;
+        var res = {};
+        ti.lods.forEach(function (l) { res[l.level] = l.resolution; });
+        var levels = ti.lods.map(function (l) { return l.level; }).sort(function (a, b) { return a - b; });
+        var spots = [[0.5, 0.5], [0.25, 0.25], [0.75, 0.25], [0.25, 0.75], [0.75, 0.75]].map(function (f) {
+          return [ext.xmin + (ext.xmax - ext.xmin) * f[0], ext.ymin + (ext.ymax - ext.ymin) * f[1]];
+        });
+        var hasTiles = function (level) {
+          return Promise.all(spots.map(function (p) {
+            var col = Math.max(0, Math.floor((p[0] - ti.origin.x) / (res[level] * size)) - HALF);
+            var row = Math.max(0, Math.floor((ti.origin.y - p[1]) / (res[level] * size)) - HALF);
+            var n = HALF * 2 + 1;
+            return fetch(root + '/tilemap/' + level + '/' + row + '/' + col + '/' + n + '/' + n + '?f=json')
+              .then(function (r) { return r.ok ? r.json() : null; })
+              .then(function (j) { return !!(j && j.data && j.data.some(function (v) { return v === 1; })); })
+              .catch(function () { return false; });
+          })).then(function (all) { return all.some(Boolean); });
+        };
+        var lo = 0, hi = levels.length - 1, best = -1;
+        var step = function () {
+          if (lo > hi) return Promise.resolve(best >= 0 ? levels[best] : null);
+          var mid = (lo + hi) >> 1;
+          return hasTiles(levels[mid]).then(function (ok) {
+            if (ok) { best = mid; lo = mid + 1; } else { hi = mid - 1; }
+            return step();
+          });
+        };
+        return step();
+      } catch (e) { return Promise.resolve(null); }
+    }
+
+    // fixedMax: a "Max zoom" set on the layer in the publisher. It is trusted as is (no service lookup).
+    // Blank: ask the service which tiles exist (probeCachedMaxLevel); if it can't say, fall back to its
+    // level list, which over-reports, so that fallback is held to TILE_ABS_MAX_ZOOM.
+    function applyEsriTileLods(layer, url, fixedMax) {
+      try {
+        var fixed = Number(fixedMax);
+        if (fixedMax !== undefined && fixedMax !== null && fixedMax !== '' && isFinite(fixed) && fixed >= 0) {
+          applyTileTop(layer, Math.round(fixed));
+          return;
+        }
+        var m = /^(.*?)\/tile\/\{z\}\/\{y\}\/\{x\}/.exec(String(url || ''));
+        if (!m || !window.fetch) return;
+        fetch(m[1] + '?f=json')
+          .then(function (r) { return r.ok ? r.json() : null; })
+          .then(function (meta) {
+            var lods = meta && meta.tileInfo && meta.tileInfo.lods;
+            if (!lods || !lods.length) return;
+            return probeCachedMaxLevel(m[1], meta).then(function (found) {
+              if (found !== null && isFinite(found)) { applyTileTop(layer, found); return; }
+              var top = Math.max.apply(null, lods.map(function (l) { return l.level; }));
+              if (typeof meta.maxLOD === 'number' && isFinite(meta.maxLOD)) top = Math.min(top, meta.maxLOD);
+              if (!isFinite(top)) return;
+              applyTileTop(layer, Math.min(top, TILE_ABS_MAX_ZOOM));
+            });
+          })
+          .catch(function () {});
+      } catch (e) {}
+    }
+
     function buildBaseLayer(basemapType, basemapUrl) {
       if ((basemapType === 'esri_tile' || basemapType === 'xyz_tile') && basemapUrl) {
-        return L.tileLayer(basemapUrl, { maxZoom: 22, attribution: 'Imagery: SPSSEG' });
+        var baseTiles = L.tileLayer(basemapUrl, { maxZoom: TILE_ABS_MAX_ZOOM, attribution: 'Imagery: SPSSEG' });
+        if (/\/tile\/\{z\}\/\{y\}\/\{x\}/.test(basemapUrl)) {
+          applyEsriTileLods(baseTiles, basemapUrl);
+        } else {
+          // Plain {z}/{x}/{y} sources (Google satellite and the like) have no metadata to ask, and they
+          // return nothing past their last real level, which showed as gray. Stretch from this level instead.
+          baseTiles.options.maxNativeZoom = XYZ_NATIVE_MAX_ZOOM;
+        }
+        return baseTiles;
       }
       if (basemapType === 'esri_image' && basemapUrl && window.L && L.esri && L.esri.imageMapLayer) {
         return L.esri.imageMapLayer({ url: basemapUrl, attribution: 'Imagery: SPSSEG' });
       }
       return L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
+        maxNativeZoom: 19, maxZoom: TILE_ABS_MAX_ZOOM,
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
       });
     }
@@ -3332,7 +3435,7 @@
 
     function ensureMapInitialized() {
       if (siteMap || typeof L === 'undefined') return;
-      siteMap = L.map('site-map', { attributionControl: true }).setView([0, 0], 2);
+      siteMap = L.map('site-map', { attributionControl: true, maxZoom: TILE_ABS_MAX_ZOOM }).setView([0, 0], 2);
       var basemapType = pendingMapData ? pendingMapData.basemapType : 'osm';
       var basemapUrl = pendingMapData ? pendingMapData.basemapUrl : '';
       osmLayer = buildBaseLayer('osm', '');
@@ -3498,6 +3601,7 @@
             }
           } else {
             layer = L.tileLayer(o.url, { maxZoom: 22, opacity: opacity, attribution: 'Imagery: SPSSEG', pane: paneName });
+            applyEsriTileLods(layer, o.url, o.max_zoom);
           }
           overlayLayers[o.label || 'Overlay'] = layer;
           if (o.default_on !== false) layer.addTo(siteMap);

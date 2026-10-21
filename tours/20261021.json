@@ -1,0 +1,115 @@
+{
+  "name": "Site Visit",
+  "sites": [
+    {
+      "site_id": "dji_20261021143254_0001_d",
+      "display_name": "Stop 1",
+      "lat": 47.117533944444446,
+      "lng": -123.13325363888889,
+      "platform": "aerial",
+      "overview": true,
+      "alt": 107.57,
+      "rel_alt": 110.41
+    },
+    {
+      "site_id": "dji_20261021142424_0001_d",
+      "display_name": "Stop 2",
+      "lat": 47.11881175,
+      "lng": -123.1292858611111,
+      "platform": "aerial",
+      "alt": 22.1,
+      "rel_alt": 24.94
+    },
+    {
+      "site_id": "dji_20261021142635_0001_d",
+      "display_name": "Stop 3",
+      "lat": 47.11856708333333,
+      "lng": -123.12657752777777,
+      "platform": "aerial",
+      "alt": 21.33,
+      "rel_alt": 24.17
+    },
+    {
+      "site_id": "dji_20261021142830_0001_d",
+      "display_name": "Stop 4",
+      "lat": 47.11769561111111,
+      "lng": -123.12877933333333,
+      "platform": "aerial",
+      "alt": 21.44,
+      "rel_alt": 24.28
+    },
+    {
+      "site_id": "dji_20261021143045_0001_d",
+      "display_name": "Stop 5",
+      "lat": 47.114704,
+      "lng": -123.12983927777778,
+      "platform": "aerial",
+      "alt": 21.94,
+      "rel_alt": 24.78
+    },
+    {
+      "site_id": "dji_20261021143502_0001_d",
+      "display_name": "Stop 6",
+      "lat": 47.116340972222226,
+      "lng": -123.13871152777779,
+      "platform": "aerial",
+      "alt": 29.64,
+      "rel_alt": 32.47
+    },
+    {
+      "site_id": "dji_20261021143658_0001_d",
+      "display_name": "Stop 7",
+      "lat": 47.11583511111111,
+      "lng": -123.14204997222222,
+      "platform": "aerial",
+      "alt": 24.84,
+      "rel_alt": 27.67
+    },
+    {
+      "site_id": "dji_20261021143927_0001_d",
+      "display_name": "Stop 8",
+      "lat": 47.11892547222222,
+      "lng": -123.13377577777779,
+      "platform": "aerial",
+      "alt": 25.7,
+      "rel_alt": 28.54
+    },
+    {
+      "site_id": "dji_20261021144129_0001_d",
+      "display_name": "Stop 9",
+      "lat": 47.119702833333335,
+      "lng": -123.12941902777777,
+      "platform": "aerial",
+      "alt": 25.59,
+      "rel_alt": 28.43
+    }
+  ],
+  "basemap_type": "xyz_tile",
+  "basemap_url": "https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}",
+  "overlays": [
+    {
+      "label": "Ortho (9/30/2026)",
+      "url": "https://tiles.arcgis.com/tiles/buuvDFFARQiOEbVZ/arcgis/rest/services/SkookumRanchPond_20260930_ortho/MapServer/tile/{z}/{y}/{x}",
+      "opacity": 1.0,
+      "default_on": true,
+      "type": "tile"
+    },
+    {
+      "label": "Ortho (2/11/2026)",
+      "url": "https://tiles.arcgis.com/tiles/buuvDFFARQiOEbVZ/arcgis/rest/services/SkookumRanchPond_Ortho_20260211_expanded_bilinearresamplingtest/MapServer/tile/{z}/{y}/{x}",
+      "opacity": 1.0,
+      "default_on": true,
+      "type": "tile"
+    },
+    {
+      "label": "Ortho (5/23/2025)",
+      "url": "https://tiles.arcgis.com/tiles/buuvDFFARQiOEbVZ/arcgis/rest/services/SkookumRanchPond_Ortho_20250523/MapServer/tile/{z}/{y}/{x}",
+      "opacity": 1.0,
+      "default_on": true,
+      "type": "tile"
+    }
+  ],
+  "forward_label": "Forward",
+  "backward_label": "Back",
+  "field_visit_date": "2026-10-21"
+}
