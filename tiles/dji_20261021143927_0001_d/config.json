@@ -14,7 +14,7 @@
     {
       "yaw": 1.8356693351941058,
       "pitch": -0.4737275059265417,
-      "title": "Stop 1",
+      "title": "Stop 1 \u00b7 160 m",
       "text": "",
       "link": "",
       "category": "link",
@@ -25,7 +25,7 @@
     {
       "yaw": 0.5520475787928888,
       "pitch": 0.010588812970972155,
-      "title": "Stop 2",
+      "title": "Stop 2 \u00b7 340 m",
       "text": "",
       "link": "",
       "category": "link",
@@ -36,7 +36,7 @@
     {
       "yaw": 0.2584075733450007,
       "pitch": 0.0003227711660745893,
-      "title": "Stop 9",
+      "title": "Stop 9 \u00b7 341 m",
       "text": "",
       "link": "",
       "category": "link",
@@ -47,7 +47,7 @@
     {
       "yaw": 0.8619196674616415,
       "pitch": 0.01059562263910083,
-      "title": "Stop 4",
+      "title": "Stop 4 \u00b7 402 m",
       "text": "",
       "link": "",
       "category": "link",
@@ -58,7 +58,7 @@
     {
       "yaw": 3.000643202671757,
       "pitch": -0.008360598538987758,
-      "title": "Stop 6",
+      "title": "Stop 6 \u00b7 471 m",
       "text": "",
       "link": "",
       "category": "link",

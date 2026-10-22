@@ -6,5 +6,5 @@ Live site: [All tours](https://alex-spsseg.github.io/wria14_skookumranch/tours.h
 
 ## Tours
 
-- [Site Visit](https://alex-spsseg.github.io/wria14_skookumranch/index.html?tour=20261021) (visited 2026-10-21, 9 stops)
+- [Site Visit](https://alex-spsseg.github.io/wria14_skookumranch/index.html?tour=20261021) (visited 2026-10-21, 10 stops)
 - [Site Visit](https://alex-spsseg.github.io/wria14_skookumranch/index.html?tour=20260930) (visited 2026-09-30, 6 stops)

@@ -82,6 +82,13 @@
       "platform": "aerial",
       "alt": 25.59,
       "rel_alt": 28.43
+    },
+    {
+      "site_id": "260902_skookumranch_60pct_draft_fordisplay",
+      "display_name": "60% Design Draft (9/2/26)",
+      "lat": null,
+      "lng": null,
+      "kind": "pdf"
     }
   ],
   "basemap_type": "xyz_tile",
@@ -111,5 +118,6 @@
   ],
   "forward_label": "Forward",
   "backward_label": "Back",
+  "map_start_zoom": 15,
   "field_visit_date": "2026-10-21"
 }
